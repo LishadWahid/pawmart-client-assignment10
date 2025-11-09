@@ -1,27 +1,65 @@
-import React, { use } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
+
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
-    const { createUser, signInUser, } = use(AuthContext);
+    const { createUser, logOut } = use(AuthContext);
+    const [passwordError, setPasswordError] = useState('');
+    const navigate = useNavigate();
 
     const handleRegister = (e) => {
         e.preventDefault();
+        setPasswordError('');
         const name = e.target.name.value;
         const photo = e.target.photo.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log({ name, photo, email, password });
 
-        createUser(email, password)
-        .then(result => {
-            console.log = result.user;
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+        const isLengthValid = password.length >= 6;
 
+        if (!hasUppercase) {
+            setPasswordError('Password must contain at least one uppercase letter.');
+            return;
+        }
+        if (!hasLowercase) {
+            setPasswordError('Password must contain at least one lowercase letter.');
+            return;
+        }
+        if (!isLengthValid) {
+            setPasswordError('Password must be at least 6 characters long.');
+            return;
+        }
+
+        createUser(email, password)
+            .then(result => {
+                const user = result.user;
+                // console.log('Register User', user);
+                logOut().then(() => {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Account created successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                    });
+                    navigate('/auth/login')
+                })
+
+            })
+            .catch(error => {
+                console.log(error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Try Again',
+                });
+            })
     }
 
     return (
@@ -45,9 +83,9 @@ const Register = () => {
                         <input name='password' type="password" className="input" placeholder="Enter your password" required />
 
                         {/* Show validation message */}
-                        {/* {passwordError && (
+                        {passwordError && (
                             <p className="text-red-600 text-sm mt-2">{passwordError}</p>
-                        )} */}
+                        )}
 
                         <button type='submit' className="btn btn-neutral mt-4">Register</button>
                         <p className='font-semibold text-center pt-5'>Allready Have An Account ? <Link className='text-secondary' to='/auth/login'>Login</Link></p>

@@ -3,7 +3,17 @@ import { Link } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Navbar = () => {
-    const { user, logout } = use(AuthContext);
+    const { user, logOut } = use(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                alert('You Logged Out succesfully');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
     return (
         <div className="navbar bg-base-100 shadow-sm px-6 justify-between">
@@ -46,7 +56,7 @@ const Navbar = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img src={user.photoURL || "/default-avatar.png"} alt="User" />
+                                <img src={user.photo || "/default-avatar.png"} alt="User" />
                             </div>
                         </label>
                         <ul
@@ -54,7 +64,7 @@ const Navbar = () => {
                             className="mt-3 p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52"
                         >
                             <li>
-                                <button onClick={logout} className="text-red-500">
+                                <button onClick={handleLogOut} className="text-red-500">
                                     Logout
                                 </button>
                             </li>

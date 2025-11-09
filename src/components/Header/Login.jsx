@@ -1,12 +1,12 @@
 import React, { use } from 'react';
 import { motion } from "framer-motion";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Login = () => {
 
     const { signInUser } = use(AuthContext);
-
+    const navigate = useNavigate();
 
     const handleLogIn = (e) => {
         e.preventDefault();
@@ -17,6 +17,8 @@ const Login = () => {
         signInUser(email, password)
         .then(result => {
             console.log(result.user);
+            e.target.reset();
+            navigate('/');
         })
         .catch(error => {
             console.log(error);
