@@ -39,7 +39,7 @@ const Register = () => {
         createUser(email, password)
             .then(result => {
                 const user = result.user;
-                // console.log('Register User', user);
+                console.log('Register User', user);
                 logOut().then(() => {
                     Swal.fire({
                         title: 'Success!',
@@ -70,24 +70,24 @@ const Register = () => {
                     <fieldset className="fieldset">
                         {/* Name */}
                         <label className="label">Name</label>
-                        <input name="name" type="text" className="input" placeholder="Enter your name" required />
+                        <input name="name" type="text" className="input input-bordered w-full" placeholder="Enter your name" required />
                         {/* Photo URL */}
                         <label className="label">Photo URL</label>
-                        <input name='photo' type="text" className="input" placeholder="Enter your Photo URL" required />
+                        <input name='photo' type="text" className="input input-bordered w-full" placeholder="Enter your Photo URL" required />
                         {/* Email */}
                         <label className="label">Email</label>
-                        <input name='email' type="email" className="input" placeholder="Enter your email address" required />
+                        <input name='email' type="email" className="input input-bordered w-full" placeholder="Enter your email address" required />
                         {/* password */}
 
                         <label className="label">Password</label>
-                        <input name='password' type="password" className="input" placeholder="Enter your password" required />
+                        <input name='password' type="password" className="input input-bordered w-full" placeholder="Enter your password" required />
 
                         {/* Show validation message */}
                         {passwordError && (
                             <p className="text-red-600 text-sm mt-2">{passwordError}</p>
                         )}
 
-                        <button type='submit' className="btn btn-neutral mt-4">Register</button>
+                        <button type='submit' className="btn btn-primary mt-4">Register</button>
                         <p className='font-semibold text-center pt-5'>Allready Have An Account ? <Link className='text-secondary' to='/auth/login'>Login</Link></p>
                     </fieldset>
                 </form>

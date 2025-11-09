@@ -2,8 +2,24 @@ import React, { use } from 'react';
 import { motion } from "framer-motion";
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../firebase/firebase.init';
+
+const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
+
+    const handleGoogleSignIn = () => {
+        // console.log('google btn clicked')
+        signInWithPopup(auth, googleProvider)
+            .then(result => {
+                console.log(result)
+                navigate('/');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     const { signInUser } = use(AuthContext);
     const navigate = useNavigate();
@@ -15,19 +31,16 @@ const Login = () => {
         console.log({ email, password });
 
         signInUser(email, password)
-        .then(result => {
-            console.log(result.user);
-            e.target.reset();
-            navigate('/');
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(result => {
+                console.log(result.user);
+                e.target.reset();
+                navigate('/');
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
-    const handleResetPassword = () => {
-
-    }
 
     return (
         <div className='flex justify-center min-h-screen items-center' initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }} >
@@ -38,16 +51,15 @@ const Login = () => {
 
                         {/* email address */}
                         <label className="label">Email address</label>
-                        <input type="email" name='email' className="input" placeholder="Enter your email address" required />
+                        <input type="email" name='email' className="input input-bordered w-full" placeholder="Enter your email address" required />
 
                         {/* password */}
                         <label className="label">Password</label>
-                        <input type="password" name='password' className="input" placeholder="Enter your password" required />
+                        <input type="password" name='password' className="input input-bordered w-full" placeholder="Enter your password" required />
 
                         <div>
                             <button
                                 type="button"
-                                onClick={handleResetPassword}
                                 className="link link-hover text-blue-500"
                             >
                                 Forgot password?
@@ -58,7 +70,7 @@ const Login = () => {
 
                         <motion.button
                             type="submit"
-                            className="btn btn-neutral mt-2 px-4 py-1 text-sm rounded-md relative overflow-hidden"
+                            className="btn btn-primary mt-2 px-4 py-1 text-sm rounded-md relative overflow-hidden"
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -85,6 +97,8 @@ const Login = () => {
                                 }}
                             />
                         </motion.button>
+
+                        <button className='btn btn-primary mt-2' onClick={handleGoogleSignIn}>Sign In With Google</button>
 
                         <p className='font-semibold text-center pt-5'>Don't Have An Account ? <Link className='' to='/auth/register'>Register</Link></p>
                     </fieldset>
