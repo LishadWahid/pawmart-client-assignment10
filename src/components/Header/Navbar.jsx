@@ -1,0 +1,84 @@
+import { use } from "react";
+import { Link } from "react-router";
+import { AuthContext } from "../contexts/AuthContext";
+
+const Navbar = () => {
+    const { user, logout } = use(AuthContext);
+
+    return (
+        <div className="navbar bg-base-100 shadow-sm px-6 justify-between">
+            {/* LEFT: Logo */}
+            <div className="flex items-center">
+                <Link to="/" className="text-2xl font-bold text-primary">
+                    PawMart
+                </Link>
+            </div>
+
+            {/* CENTER: Menu items */}
+            <div className="flex justify-center flex-1">
+                <ul className="menu menu-horizontal text-center gap-4">
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/pets">Pets & Supplies</Link>
+                    </li>
+
+                    {user && (
+                        <>
+                            <li>
+                                <Link to="/add-listing">Add Listing</Link>
+                            </li>
+                            <li>
+                                <Link to="/my-listings">My Listings</Link>
+                            </li>
+                            <li>
+                                <Link to="/my-orders">My Orders</Link>
+                            </li>
+                        </>
+                    )}
+                </ul>
+            </div>
+
+            {/* RIGHT: Auth / Profile */}
+            <div className="flex items-center gap-3">
+                {user ? (
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full">
+                                <img src={user.photoURL || "/default-avatar.png"} alt="User" />
+                            </div>
+                        </label>
+                        <ul
+                            tabIndex={0}
+                            className="mt-3 p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52"
+                        >
+                            <li>
+                                <button onClick={logout} className="text-red-500">
+                                    Logout
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                ) : (
+                    <>
+                        <Link
+                            to="/auth/login"
+                            className="btn btn-outline btn-sm btn-primary"
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            to="/auth/register"
+                            className="btn btn-primary btn-sm text-white"
+                        >
+                            Register
+                        </Link>
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default Navbar;
