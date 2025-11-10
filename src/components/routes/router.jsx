@@ -5,6 +5,7 @@ import Home from '../Home/Home';
 import Login from '../Header/Login';
 import Register from '../Header/Register';
 import AuthLayout from '../Layouts/AuthLayout';
+import CategoryFilteredProduct from '../Database/CategoryFilteredProduct';
 
 const router = createBrowserRouter(
     [
@@ -15,6 +16,10 @@ const router = createBrowserRouter(
                 {
                     path: '/',
                     element: <Home></Home>,
+                },
+                {
+                    path: '/category-filtered-product/:categoryName',
+                    element: <CategoryFilteredProduct></CategoryFilteredProduct>,
                 },
             ],
         },

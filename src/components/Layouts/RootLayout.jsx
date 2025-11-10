@@ -4,6 +4,7 @@ import { Outlet } from 'react-router';
 import Footer from '../Footer/Footer';
 import Banner from '../Banner/Banner';
 import OurServices from '../Banner/OurService';
+import CategorySection from '../Database/CategorySection';
 
 
 
@@ -13,6 +14,7 @@ const RootLayout = () => {
             <Navbar></Navbar>
             <Banner></Banner>
             <OurServices></OurServices>
+            <CategorySection></CategorySection>
             <Outlet></Outlet>
             <Footer></Footer>
         </div>
