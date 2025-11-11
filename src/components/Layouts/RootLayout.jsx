@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import Banner from '../Banner/Banner';
 import OurServices from '../Banner/OurService';
 import CategorySection from '../Database/CategorySection';
+import LatestListings from '../Page/LatestListings';
 
 
 
