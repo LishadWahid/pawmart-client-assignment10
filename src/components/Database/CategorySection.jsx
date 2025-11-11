@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import CategoryFilteredProduct from "./CategoryFilteredProduct";
 
 
 const categories = [
@@ -32,6 +33,7 @@ const CategorySection = () => {
                 ))}
             </div>
         </div>
+        
     );
 };
 

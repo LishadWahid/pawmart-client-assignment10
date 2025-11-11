@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const ListingDetails = () => {
-    const { listingId } = useParams();
+    const { id } = useParams();
     const [listing, setListing] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/listing-details/${listingId}`)
+        fetch(`http://localhost:3000/listing-details/${id}`)
             .then((res) => res.json())
-            .then((data) => setListing(data))
+            .then((data) => {
+                // console.log(data)
+                setListing(data)
+            })
             .catch((error) => console.error('Error fetching listing details:', error));
-    }, [listingId]);
+    }, [id]);
 
     if (!listing) {
         return <p>Loading details...</p>;

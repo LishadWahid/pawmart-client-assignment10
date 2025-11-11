@@ -9,6 +9,8 @@ import LatestListings from '../Page/LatestListings';
 
 
 
+
+
 const RootLayout = () => {
     return (
         <div className='max-w-7xl mx-auto'>
@@ -17,6 +19,7 @@ const RootLayout = () => {
             <OurServices></OurServices>
             <CategorySection></CategorySection>
             <Outlet></Outlet>
+            <LatestListings></LatestListings>
             <Footer></Footer>
         </div>
     );

@@ -33,7 +33,7 @@ const CategoryFilteredProduct = () => {
     return (
         <div className="py-12 bg-gradient-to-r from-indigo-50 to-pink-50">
             <h2 className="text-4xl font-semibold text-center text-gray-800 mb-8">
-                🛍️ {capitalizeFirstLetter(categoryName)} Products
+                🛍️ {capitalizeFirstLetter(categoryName)}
             </h2>
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const LatestListings = () => {
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    const [selectedListing, setSelectedListing] = useState(null); // State to store the selected listing for the modal
+    const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
 
     useEffect(() => {
         // Fetch the latest 6 listings from the backend
@@ -19,6 +19,16 @@ const LatestListings = () => {
                 setLoading(false);
             });
     }, []);
+
+    const handleOpenModal = (listing) => {
+        setSelectedListing(listing);  // Set the selected listing
+        setModalOpen(true); // Open the modal
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false); // Close the modal
+        setSelectedListing(null); // Clear the selected listing
+    };
 
     if (loading) {
         return <p>Loading latest listings...</p>;
@@ -35,7 +45,10 @@ const LatestListings = () => {
                     <p className="text-center text-xl text-gray-500">No listings available</p>
                 ) : (
                     listings.map((listing) => (
-                        <div key={listing._id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 ease-in-out hover:scale-105">
+                        <div
+                            key={listing._id}
+                            className="bg-white rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 ease-in-out hover:scale-105"
+                        >
                             <img
                                 src={listing.image || 'default-image.jpg'} // Default image if none provided
                                 alt={listing.name}
@@ -49,7 +62,7 @@ const LatestListings = () => {
                                 </p>
                                 <p className="text-sm text-gray-500 mt-2">Location: {listing.location}</p>
                                 <button
-                                    onClick={() => navigate(`/listing-details/${listing._id}`)} // Navigate to details page
+                                    onClick={() => handleOpenModal(listing)} // Open modal with the selected listing
                                     className="mt-4 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-all"
                                 >
                                     See Details
@@ -59,6 +72,43 @@ const LatestListings = () => {
                     ))
                 )}
             </div>
+
+            {/* Modal */}
+            {modalOpen && selectedListing && (
+                <dialog
+                    open
+                    className="modal modal-bottom sm:modal-middle"
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget) {
+                            handleCloseModal();
+                        }
+                    }}
+                >
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg">Listing Details</h3>
+                        <img
+                            src={selectedListing.image || 'default-image.jpg'}
+                            alt={selectedListing.name}
+                            className="w-full h-48 object-cover mb-4 rounded-lg"
+                        />
+                        <p className="text-xl font-semibold text-gray-800">{selectedListing.name}</p>
+                        <p className="text-sm text-gray-500">Category: {selectedListing.category}</p>
+                        <p className="text-lg text-gray-600 mt-2">{selectedListing.description}</p>
+                        <p className="text-xl font-semibold text-gray-800 mt-4">
+                            {selectedListing.price ? `$${selectedListing.price}` : 'Free for Adoption'}
+                        </p>
+                        <p className="text-sm text-gray-500 mt-2">Location: {selectedListing.location}</p>
+                        <div className="modal-action">
+                            <button
+                                className="btn"
+                                onClick={handleCloseModal}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </dialog>
+            )}
         </div>
     );
 };

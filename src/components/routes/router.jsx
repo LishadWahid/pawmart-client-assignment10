@@ -7,6 +7,7 @@ import Register from '../Header/Register';
 import AuthLayout from '../Layouts/AuthLayout';
 import CategoryFilteredProduct from '../Database/CategoryFilteredProduct';
 import LatestListings from '../Page/LatestListings';
+import ListingDetails from '../Page/ListingDetails';
 
 const router = createBrowserRouter(
     [
@@ -26,6 +27,10 @@ const router = createBrowserRouter(
                     path: '/latest-listings',
                     element: <LatestListings></LatestListings>,
                 },
+                {
+                    path: '/listing-details/:id',
+                    element: <ListingDetails></ListingDetails>
+                }
             ],
         },
         {
