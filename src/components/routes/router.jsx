@@ -7,8 +7,11 @@ import Register from '../Header/Register';
 import AuthLayout from '../Layouts/AuthLayout';
 import CategoryFilteredProduct from '../Database/CategoryFilteredProduct';
 import LatestListings from '../Page/LatestListings';
-import ListingDetails from '../Page/ListingDetails';
 import PetSupply from '../Page/PetSupply';
+import ListingDetailsPage from '../Page/ListingDetailsPage';
+import AddListingPage from '../Page/AddListingPage';
+import MyListingsPage from '../Page/MyListingsPage';
+import MyOrdersPage from '../Page/MyOrdersPage';
 
 const router = createBrowserRouter(
     [
@@ -28,15 +31,27 @@ const router = createBrowserRouter(
                     path: '/latest-listings',
                     element: <LatestListings></LatestListings>,
                 },
-                {
-                    path: '/listing-details/:id',
-                    element: <ListingDetails></ListingDetails>
-                }
             ],
         },
         {
             path: '/pet-listings',
             element: <PetSupply></PetSupply>,
+        },
+        {
+            path: '/listings',
+            element: <AddListingPage></AddListingPage>,
+        },
+        {
+            path: '/listing-details/:id',
+            element: <ListingDetailsPage></ListingDetailsPage>,
+        },
+        {
+            path: '/my-listings',
+            element: <MyListingsPage></MyListingsPage>,
+        },
+        {
+            path: '/my-orders',
+            element: <MyOrdersPage></MyOrdersPage>,
         },
         {
             path: '/auth',

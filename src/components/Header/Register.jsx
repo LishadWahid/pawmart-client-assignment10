@@ -1,14 +1,50 @@
 import React, { use, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
-
 import Swal from 'sweetalert2';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../firebase/firebase.init';
+
+const googleProvider = new GoogleAuthProvider();
 
 const Register = () => {
 
     const { createUser, logOut } = use(AuthContext);
     const [passwordError, setPasswordError] = useState('');
     const navigate = useNavigate();
+
+    const handleGoogleSignIn = () => {
+        // console.log('google btn clicked')
+        signInWithPopup(auth, googleProvider)
+            .then(result => {
+                console.log('Google Sign In Success:', result.user)
+                // navigate('/');
+                const newUser = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    image: result.user.photoURL
+                }
+                fetch('http://localhost:3000/users/', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('data after user save', data);
+                    })
+            })
+            .catch(error => {
+                console.log('Google Sign In Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                });
+            })
+    }
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -88,6 +124,9 @@ const Register = () => {
                         )}
 
                         <button type='submit' className="btn btn-primary mt-4">Register</button>
+
+                        <button className='btn btn-primary mt-2' onClick={handleGoogleSignIn}>Sign In With Google</button>
+
                         <p className='font-semibold text-center pt-5'>Allready Have An Account ? <Link className='text-secondary' to='/auth/login'>Login</Link></p>
                     </fieldset>
                 </form>

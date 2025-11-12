@@ -8,7 +8,9 @@ import { auth } from '../firebase/firebase.init';
 const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
-
+    
+    const { signInUser } = use(AuthContext);
+    
     const handleGoogleSignIn = () => {
         // console.log('google btn clicked')
         signInWithPopup(auth, googleProvider)
@@ -21,7 +23,6 @@ const Login = () => {
             })
     }
 
-    const { signInUser } = use(AuthContext);
     const navigate = useNavigate();
 
     const handleLogIn = (e) => {
