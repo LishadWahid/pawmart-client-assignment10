@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router";
-import pet1 from '../../assets/Pet1.jpg'
-import pet2 from '../../assets/Pet2.jpg'
 import pet3 from '../../assets/Pet3.jpg'
-import pet4 from '../../assets/Pet4.jpg'
-import pet5 from '../../assets/Pet5.jpg'
+import p3 from '../../assets/p3.jpg'
+import p4 from '../../assets/P4.jpg'
 
 
 const Banner = () => {
@@ -14,7 +12,7 @@ const Banner = () => {
             {/* Slide 1 */}
             <div id="slide1" className="carousel-item relative w-full">
                 <img
-                    src={pet1}
+                    src={p3}
                     className="w-full object-cover h-[500px]"
                     alt="Pet Adoption"
                 />
@@ -42,7 +40,7 @@ const Banner = () => {
             {/* Slide 2 */}
             <div id="slide2" className="carousel-item relative w-full">
                 <img
-                    src={pet2}
+                    src={p4}
                     className="w-full object-cover h-[500px]"
                     alt="Pet Supplies"
                 />

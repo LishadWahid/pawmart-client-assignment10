@@ -1,12 +1,12 @@
 import React from 'react';
 
-
+// const latestListingsPromise = fetch('http://localhost:3000/latest-listings').then(res => res.json());
 
 const Home = () => {
     
     return (
         <div className=''>
-            {/* <h2>This is Home</h2> */}
+            {/* <LatestListings latestListingsPromise={latestListingsPromise}></LatestListings> */}
         </div>
     );
 };

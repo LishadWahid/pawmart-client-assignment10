@@ -13,7 +13,7 @@ import LatestListings from '../Page/LatestListings';
 
 const RootLayout = () => {
     return (
-        <div className='max-w-7xl mx-auto'>
+        <div className='max-w-5xl mx-auto'>
             <Navbar></Navbar>
             <Banner></Banner>
             <OurServices></OurServices>

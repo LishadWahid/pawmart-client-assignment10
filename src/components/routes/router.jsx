@@ -8,6 +8,7 @@ import AuthLayout from '../Layouts/AuthLayout';
 import CategoryFilteredProduct from '../Database/CategoryFilteredProduct';
 import LatestListings from '../Page/LatestListings';
 import ListingDetails from '../Page/ListingDetails';
+import PetSupply from '../Page/PetSupply';
 
 const router = createBrowserRouter(
     [
@@ -32,6 +33,10 @@ const router = createBrowserRouter(
                     element: <ListingDetails></ListingDetails>
                 }
             ],
+        },
+        {
+            path: '/pet-listings',
+            element: <PetSupply></PetSupply>,
         },
         {
             path: '/auth',
