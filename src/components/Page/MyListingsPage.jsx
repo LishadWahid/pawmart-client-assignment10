@@ -3,7 +3,6 @@ import { AuthContext } from "../contexts/AuthContext";
 import Navbar from "../Header/Navbar";
 import Footer from "../Footer/Footer";
 
-
 const MyListingsPage = () => {
     const { user } = useContext(AuthContext);
     const [listings, setListings] = useState([]);
@@ -23,24 +22,51 @@ const MyListingsPage = () => {
         }
     };
 
+    // Update listing (redirect or open modal — adjust as needed)
+    const handleUpdate = id => {
+        // Example: redirect to update page
+        window.location.href = `/update-listing/${id}`;
+    };
+
     return (
         <>
             <Navbar />
             <div className="max-w-4xl mx-auto mt-10 bg-white p-5 rounded shadow">
                 <h2 className="text-2xl font-bold text-center mb-4">My Listings</h2>
-                {listings.length === 0 ? <p>No listings found.</p> : (
+
+                {listings.length === 0 ? (
+                    <p className="text-center">No listings found.</p>
+                ) : (
                     <table className="table w-full">
                         <thead>
-                            <tr><th>Name</th><th>Category</th><th>Price</th><th>Action</th></tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            {listings.map(l => (
+                            {listings.map((l, index) => (
                                 <tr key={l._id}>
+                                    <td>{index + 1}</td> {/* Serial number */}
                                     <td>{l.name}</td>
                                     <td>{l.category}</td>
                                     <td>${l.price}</td>
-                                    <td>
-                                        <button onClick={() => handleDelete(l._id)} className="btn btn-sm btn-error">Delete</button>
+                                    <td className="space-x-2">
+                                        <button
+                                            onClick={() => handleUpdate(l._id)}
+                                            className="btn btn-sm btn-info"
+                                        >
+                                            Update
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(l._id)}
+                                            className="btn btn-sm btn-error"
+                                        >
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -48,8 +74,9 @@ const MyListingsPage = () => {
                     </table>
                 )}
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 };
+
 export default MyListingsPage;

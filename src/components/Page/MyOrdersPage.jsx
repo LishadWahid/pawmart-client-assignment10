@@ -1,59 +1,100 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import Navbar from "../Header/Navbar";
 import Footer from "../Footer/Footer";
-
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"; 
 const MyOrdersPage = () => {
     const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/orders")
-            .then(res => res.json())
-            .then(data => setOrders(data.filter(o => o.email === user?.email)));
+        if (user?.email) {
+            fetch(`http://localhost:3000/orders?email=${user.email}`)
+                .then(res => res.json())
+                .then(data => setOrders(data));
+        }
     }, [user]);
 
-    // Download PDF
-    const downloadPDF = () => {
+    const handleDownloadReport = () => {
         const doc = new jsPDF();
-        doc.text("My Orders Report", 10, 10);
-        doc.autoTable({
-            head: [["Product", "Price", "Qty", "Address"]],
-            body: orders.map(o => [o.productName, `$${o.price}`, o.quantity, o.address]),
+        doc.text("My Orders Report", 14, 15);
+
+        const tableData = orders.map((order, index) => [
+            index + 1,
+            order.productName || "N/A",
+            order.buyerName || user?.displayName || "Me",
+            `$${order.price || 0}`,
+            order.quantity || 1,
+            order.address || "N/A",
+            order.phone || "N/A",
+            order.date || "N/A",
+        ]);
+
+        autoTable(doc, {
+            head: [["#", "Product", "Buyer", "Price", "Qty", "Address", "Phone", "Date"]],
+            body: tableData,
+            startY: 25,
         });
-        doc.save("MyOrders.pdf");
+
+        doc.save("My_Orders_Report.pdf");
     };
 
     return (
         <>
             <Navbar />
-            <div className="max-w-4xl mx-auto mt-10 bg-white p-5 rounded shadow">
-                <h2 className="text-2xl font-bold text-center mb-4">My Orders</h2>
-                {orders.length === 0 ? <p>No orders found.</p> : (
+            <div className="max-w-5xl mx-auto mt-10 bg-white p-5 rounded shadow">
+                <h2 className="text-2xl font-bold text-center mb-6">My Orders</h2>
+
+                {orders.length === 0 ? (
+                    <p className="text-center text-gray-500">No orders found.</p>
+                ) : (
                     <>
-                        <table className="table w-full">
-                            <thead>
-                                <tr><th>Product</th><th>Price</th><th>Qty</th><th>Address</th></tr>
-                            </thead>
-                            <tbody>
-                                {orders.map((o, i) => (
-                                    <tr key={i}>
-                                        <td>{o.productName}</td>
-                                        <td>${o.price}</td>
-                                        <td>{o.quantity}</td>
-                                        <td>{o.address}</td>
+                        <div className="overflow-x-auto">
+                            <table className="table w-full">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product</th>
+                                        <th>Buyer</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                        <th>Date</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <button onClick={downloadPDF} className="btn btn-primary mt-4 w-full">📄 Download Report</button>
+                                </thead>
+                                <tbody>
+                                    {orders.map((o, index) => (
+                                        <tr key={o._id}>
+                                            <td>{index + 1}</td>
+                                            <td>{o.productName}</td>
+                                            <td>{o.buyerName || user?.displayName || "Me"}</td>
+                                            <td>${o.price}</td>
+                                            <td>{o.quantity}</td>
+                                            <td>{o.address}</td>
+                                            <td>{o.phone}</td>
+                                            <td>{o.date}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="text-center mt-6">
+                            <button
+                                onClick={handleDownloadReport}
+                                className="btn btn-primary"
+                            >
+                                📄 Download Report (PDF)
+                            </button>
+                        </div>
                     </>
                 )}
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 };
+
 export default MyOrdersPage;
