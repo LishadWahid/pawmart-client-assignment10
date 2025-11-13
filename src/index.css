@@ -8,5 +8,5 @@
   name: "light";
   default: true;
   --color-primary: red;
-  --color-secondary: teal;
+  --color-secondary: white;
 }
