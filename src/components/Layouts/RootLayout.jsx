@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import Banner from '../Banner/Banner';
 import CategorySection from '../Database/CategorySection';
 import LatestListings from '../Page/LatestListings';
+import WhyAdopt from '../Home/WhyAdopt';
 
 
 
@@ -18,6 +19,7 @@ const RootLayout = () => {
             <CategorySection></CategorySection>
             <Outlet></Outlet>
             <LatestListings></LatestListings>
+            <WhyAdopt></WhyAdopt>
             <Footer></Footer>
         </div>
     );
