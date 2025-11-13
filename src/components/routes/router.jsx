@@ -12,6 +12,7 @@ import ListingDetailsPage from '../Page/ListingDetailsPage';
 import AddListingPage from '../Page/AddListingPage';
 import MyListingsPage from '../Page/MyListingsPage';
 import MyOrdersPage from '../Page/MyOrdersPage';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 const router = createBrowserRouter(
     [
@@ -39,19 +40,19 @@ const router = createBrowserRouter(
         },
         {
             path: '/listings',
-            element: <AddListingPage></AddListingPage>,
+            element: <PrivateRoute><AddListingPage></AddListingPage></PrivateRoute>,
         },
         {
             path: '/listing-details/:id',
-            element: <ListingDetailsPage></ListingDetailsPage>,
+            element: <PrivateRoute><ListingDetailsPage></ListingDetailsPage></PrivateRoute>,
         },
         {
             path: '/my-listings',
-            element: <MyListingsPage></MyListingsPage>,
+            element: <PrivateRoute><MyListingsPage></MyListingsPage></PrivateRoute>,
         },
         {
             path: '/my-orders',
-            element: <MyOrdersPage></MyOrdersPage>,
+            element: <PrivateRoute><MyOrdersPage></MyOrdersPage></PrivateRoute>,
         },
         {
             path: '/auth',
