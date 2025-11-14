@@ -23,13 +23,14 @@ const Register = () => {
                     email: result.user.email,
                     image: result.user.photoURL
                 };
-                fetch('http://localhost:3000/users/', {
+                fetch('https://pawmart-server-sandy.vercel.app/users/', {
                     method: 'POST',
                     headers: { 'content-type': 'application/json' },
                     body: JSON.stringify(newUser)
                 })
                     .then(res => res.json())
                     .then(data => console.log('data after user save', data));
+                navigate('/');
             })
             .catch(error => {
                 console.log('Google Sign In Error:', error);
@@ -49,6 +50,7 @@ const Register = () => {
         const photo = e.target.photo.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
+        console.log({ name, photo, email, password });
 
         const hasUppercase = /[A-Z]/.test(password);
         const hasLowercase = /[a-z]/.test(password);

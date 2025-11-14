@@ -1,24 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion } from "framer-motion";
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../firebase/firebase.init';
-
-const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
     const { signInUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleGoogleSignIn = () => {
-        signInWithPopup(auth, googleProvider)
-            .then(result => {
-                console.log(result);
-                navigate('/');
-            })
-            .catch(error => console.log(error));
-    };
+    const [errorMsg, setErrorMsg] = useState("");
 
     const handleLogIn = (e) => {
         e.preventDefault();
@@ -27,11 +16,19 @@ const Login = () => {
 
         signInUser(email, password)
             .then(result => {
-                console.log(result.user);
+                console.log(result);
                 e.target.reset();
                 navigate('/');
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+
+                // Show error message
+                setErrorMsg("❌ Unauthorized: Incorrect Email or Password");
+
+                // Auto hide after 3 seconds
+                setTimeout(() => setErrorMsg(""), 3000);
+            });
     };
 
     return (
@@ -44,9 +41,17 @@ const Login = () => {
             transition={{ duration: 0.6 }}
         >
             <div className="card bg-white w-full max-w-sm shadow-lg rounded-2xl py-6 px-6 border border-gray-200">
+
                 <h2 className='font-bold text-2xl text-center text-gray-800 mb-3'>
                     Login to your account
                 </h2>
+
+                {/* ERROR MESSAGE */}
+                {errorMsg && (
+                    <div className="mb-3 p-2 text-center text-red-600 bg-red-100 border border-red-300 rounded-lg text-sm">
+                        {errorMsg}
+                    </div>
+                )}
 
                 <form onSubmit={handleLogIn} className="card-body p-0 space-y-3">
                     <fieldset className="fieldset">
@@ -86,20 +91,6 @@ const Login = () => {
                         >
                             Login
                         </motion.button>
-
-                        {/* Google Button */}
-                        <button
-                            type="button"
-                            onClick={handleGoogleSignIn}
-                            className="btn w-full mt-2 bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 flex items-center justify-center gap-2"
-                        >
-                            <img
-                                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                                alt="Google Logo"
-                                className="w-5 h-5"
-                            />
-                            Sign in with Google
-                        </button>
 
                         <p className="text-center text-gray-700 text-sm font-medium pt-3">
                             Don't have an account?{" "}

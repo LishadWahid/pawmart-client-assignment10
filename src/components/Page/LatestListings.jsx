@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
+import toast from 'react-hot-toast';
 
 const LatestListings = () => {
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const {user} = use(AuthContext);
 
     useEffect(() => {
         // Fetch the latest 6 listings from the backend
-        fetch('http://localhost:3000/latest-listings')
+        fetch('https://pawmart-server-sandy.vercel.app/latest-listings')
             .then((res) => res.json())
             .then((data) => {
                 setListings(data);
@@ -48,10 +51,20 @@ const LatestListings = () => {
                                     {listing.price ? `$${listing.price}` : 'Free for Adoption'}
                                 </p>
                                 <p className="text-sm text-gray-500 mt-2">Location: {listing.location}</p>
-                                <button
+                                {/* <button
                                     onClick={() => navigate(`/listing-details/${listing._id}`)} // Navigate to details page
-                                    className="mt-4 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-all"
+                                    className="mt-4 px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-400 transition-all"
                                 >
+                                    See Details
+                                </button> */}
+                                <button onClick={() => {
+                                    if(user) {
+                                        navigate(`/listing-details/${listing._id}`)
+                                    } else {
+                                        navigate('/auth/register')
+                                        toast.error("Please register or login first!");
+                                    }
+                                }} className="mt-4 px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-400 transition-all">
                                     See Details
                                 </button>
                             </div>

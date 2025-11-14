@@ -13,49 +13,51 @@ import AddListingPage from '../Page/AddListingPage';
 import MyListingsPage from '../Page/MyListingsPage';
 import MyOrdersPage from '../Page/MyOrdersPage';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import ErrorPage from '../Page/ErrorPage';
 
 const router = createBrowserRouter(
     [
         {
             path: '/',
             element: <RootLayout></RootLayout>,
+            errorElement: <ErrorPage></ErrorPage>,
             children: [
                 {
                     path: '/',
                     element: <Home></Home>,
                 },
                 {
-                    path: '/category-filtered-product/:categoryName',
+                    path: 'category-filtered-product/:categoryName',
                     element: <CategoryFilteredProduct></CategoryFilteredProduct>,
                 },
                 {
-                    path: '/latest-listings',
+                    path: 'latest-listings',
                     element: <LatestListings></LatestListings>,
                 },
             ],
         },
         {
-            path: '/pet-listings',
+            path: 'pet-listings',
             element: <PetSupply></PetSupply>,
         },
         {
-            path: '/listings',
+            path: 'listings',
             element: <PrivateRoute><AddListingPage></AddListingPage></PrivateRoute>,
         },
         {
-            path: '/listing-details/:id',
+            path: 'listing-details/:id',
             element: <PrivateRoute><ListingDetailsPage></ListingDetailsPage></PrivateRoute>,
         },
         {
-            path: '/my-listings',
+            path: 'my-listings',
             element: <PrivateRoute><MyListingsPage></MyListingsPage></PrivateRoute>,
         },
         {
-            path: '/my-orders',
+            path: 'my-orders',
             element: <PrivateRoute><MyOrdersPage></MyOrdersPage></PrivateRoute>,
         },
         {
-            path: '/auth',
+            path: 'auth',
             element: <AuthLayout></AuthLayout>,
             children: [
                 {

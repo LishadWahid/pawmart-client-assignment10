@@ -21,7 +21,7 @@ const AddListingPage = () => {
             email: user?.email,
         };
 
-        fetch("http://localhost:3000/listings", {
+        fetch("https://pawmart-server-sandy.vercel.app/listings", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(newListing),
@@ -37,6 +37,7 @@ const AddListingPage = () => {
         <>
             <Navbar />
             <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
+                <title>Pawmart-client - Add listing</title>
                 <h2 className="text-2xl font-bold text-center mb-4">Add New Listing</h2>
 
                 <form onSubmit={handleAddListing} className="space-y-3">

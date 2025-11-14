@@ -9,7 +9,7 @@ const ListingDetailsPage = () => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/listing-details/${id}`)
+        fetch(`https://pawmart-server-sandy.vercel.app/listing-details/${id}`)
             .then(res => res.json())
             .then(data => setListing(data));
     }, [id]);
@@ -32,7 +32,7 @@ const ListingDetailsPage = () => {
             notes: form.notes.value
         };
 
-        fetch("http://localhost:3000/orders", {
+        fetch("https://pawmart-server-sandy.vercel.app/orders", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(order)
@@ -46,6 +46,7 @@ const ListingDetailsPage = () => {
 
     return (
         <div className="max-w-xl mx-auto mt-10 p-5 shadow-lg rounded-xl bg-white">
+            <title>{listing.name}</title>
             <img src={listing.image} alt={listing.name} className="rounded-lg w-full h-64 object-cover" />
             <h2 className="text-2xl font-bold mt-3">{listing.name}</h2>
             <p>Category: {listing.category}</p>

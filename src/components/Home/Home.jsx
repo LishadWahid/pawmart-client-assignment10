@@ -1,7 +1,7 @@
 import React from 'react';
 import ListingDetailsPage from '../Page/ListingDetailsPage';
 
-// const latestListingsPromise = fetch('http://localhost:3000/latest-listings').then(res => res.json());
+// const latestListingsPromise = fetch('https://pawmart-server-sandy.vercel.app/latest-listings').then(res => res.json());
 
 const Home = () => {
     

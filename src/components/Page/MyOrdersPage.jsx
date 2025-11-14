@@ -10,7 +10,7 @@ const MyOrdersPage = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/orders?email=${user.email}`)
+            fetch(`https://pawmart-server-sandy.vercel.app/orders?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => setOrders(data));
         }
@@ -44,6 +44,7 @@ const MyOrdersPage = () => {
         <>
             <Navbar />
             <div className="max-w-5xl mx-auto mt-10 bg-white p-5 rounded shadow">
+                <title>Pawmart-client - My orders</title>
                 <h2 className="text-2xl font-bold text-center mb-6">My Orders</h2>
 
                 {orders.length === 0 ? (

@@ -13,7 +13,7 @@ const CategoryFilteredProduct = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/category-filtered-product/${categoryName}`)
+        fetch(`https://pawmart-server-sandy.vercel.app/category-filtered-product/${categoryName}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);

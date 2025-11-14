@@ -12,7 +12,7 @@ const PetSupply = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:3000/pet-listings')
+        fetch('https://pawmart-server-sandy.vercel.app/pet-listings')
             .then((res) => res.json())
             .then((data) => {
                 setListings(data);
@@ -77,6 +77,7 @@ const PetSupply = () => {
         <>  
             <Navbar></Navbar>
             <div className="py-12 bg-gradient-to-r from-teal-50 to-lime-50 min-h-screen">
+                <title>Pawmart-client - Pet supply</title>
                 <h2 className="text-4xl font-semibold text-center text-gray-800 mb-8">
                     🐶 Pets & Supplies
                 </h2>
@@ -136,7 +137,7 @@ const PetSupply = () => {
                                     </p>
                                     <button
                                         onClick={() => handleOpenModal(listing)}
-                                        className="mt-4 px-6 py-2 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-all"
+                                        className="mt-4 px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-400 transition-all"
                                     >
                                         See Details
                                     </button>
