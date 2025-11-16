@@ -27,7 +27,7 @@ const Navbar = () => {
 
             {/* MOBILE MENU (Hamburger) */}
             <div className="flex-none lg:hidden">
-                <div className="dropdown">
+                <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-ghost btn-circle">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

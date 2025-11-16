@@ -74,7 +74,7 @@ const Banner = () => {
                     </p>
                     <Link
                         to={slide.btnLink}
-                        className={`btn ${slide.btnStyle} w-fit rounded-full px-6 shadow-md hover:scale-105 transition-transform`}
+                        className={`btn btn-primary ${slide.btnStyle} w-fit rounded-full bg-red-500 px-6 shadow-md hover:scale-105 transition-transform`}
                     >
                         {slide.btnText}
                     </Link>
